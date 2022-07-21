@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -79,12 +80,14 @@ class MealsFragment : Fragment() {
             binding.toolbar.title = it.strCategory
             binding.detailImage.load(it.strCategoryThumb)
             binding.detailImage.transitionName = it.idCategory
+            binding.tvCategoryDescription.text = it.strCategoryDescription
         }
         val orientation = this.resources.configuration.orientation
 
         val spanCount = if (orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4
         val mLayoutManager = GridLayoutManager(requireContext(), spanCount)
-        mLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+        //Makes First item to grab full screen width
+        /*mLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (position) {
                     0 -> spanCount
@@ -92,22 +95,31 @@ class MealsFragment : Fragment() {
                 }
             }
 
-        }
+        }*/
 
 
         binding.recyclerViewMeals.apply {
             layoutManager = mLayoutManager
             setHasFixedSize(true)
             adapter = mealsAdapter
+
+           /* setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+                // the delay of the extension of the FAB is set for 1
+                if (scrollY > oldScrollY + 10 && !binding.tvCategoryDescription.isCollapsed) {
+                    binding.tvCategoryDescription.performClick()
+                }
+            }*/
+
+
         }
+
+
         collectLatestLifeCycleFlow(viewModel.meals) {
             when (it) {
                 is Resource.Success -> {
                     binding.refreshLayout.isRefreshing = false
                     val meals = ArrayList<MealFragmentRecyclerModel>()
-                    viewModel.category?.let { category ->
-                        meals.add(MealFragmentRecyclerModel.Description(categoryDescription = category.strCategoryDescription))
-                    }
+
                     meals.addAll(it.data.meals)
 
                     mealsAdapter.submitList(meals)

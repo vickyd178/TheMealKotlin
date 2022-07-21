@@ -19,23 +19,6 @@ import com.doops.themealkotlin.databinding.ItemMealGridBinding
 class MealsAdapter :
     ListAdapter<MealFragmentRecyclerModel, MealsViewHolder>(DiffUtils()) {
 
-    /*  inner class MealViewHolder(private val binding: ItemMealGridBinding) :
-          RecyclerView.ViewHolder(binding.root) {
-          fun bind(meal: MealFragmentRecyclerModel) {
-              binding.tvMealName.text = strMeal
-
-              binding.thumbnailMeal.load(strMealThumb) {
-                  scale(Scale.FILL)
-              }
-
-              binding.root.setOnClickListener {
-                  onMealItemClickListener?.invoke(
-                      meal,
-                      adapterPosition
-                  )
-              }
-          }
-      }*/
 
     var onMealItemClickListener: ((meal: MealFragmentRecyclerModel, position: Int, view: ImageView) -> Unit)? =
         null
@@ -54,9 +37,6 @@ class MealsAdapter :
             )
             else -> throw IllegalArgumentException("Invalid View Type Provided")
         }
-        /* return MealsViewHolder(
-             ItemMealGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-         )*/
     }
 
     override fun onBindViewHolder(holder: MealsViewHolder, position: Int) {
@@ -108,23 +88,6 @@ sealed class MealsViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bin
             binding.tvCategoryDescription.apply {
                 text = description.categoryDescription
             }
-            /*binding.tvCategoryDescription.setOnExpandableClickListener(
-                onExpand = {
-
-                },
-                onCollapse = {
-
-                }
-            )*/
-
-            /* binding.tvShowMore.setOnClickListener {
-                 binding.tvCategoryDescription.performClick()
-             }
-             binding.tvCategoryDescription.setOnClickListener {
-                 binding.tvCategoryDescription.onClick(it)
-                 binding.tvShowMore.text =
-                     if (binding.tvCategoryDescription.isCollapsing) "Show More" else "Hide"
-             }*/
         }
     }
 

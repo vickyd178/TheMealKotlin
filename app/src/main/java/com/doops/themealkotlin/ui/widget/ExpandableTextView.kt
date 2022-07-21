@@ -84,17 +84,22 @@ class ExpandableTextView : AppCompatTextView, View.OnClickListener {
         val chars =
             (layout.getLineEnd(COLLAPSED_MAX_LINES - 1) - layout.getLineStart(COLLAPSED_MAX_LINES - 1))
         val additionalGap = 4
-        if (chars + additionalGap < POSTFIX.length) {
+        /*if (chars + additionalGap < POSTFIX.length) {
             // handle rare case when text has a last  maxLine which has  only few chars and
             // then it goes to the next line .
             // lin such case there is nothing twe cannot replace because postfix
             // length is greater then max line length. Do nothing.
             return
-        }
+        }*/
+
+        /* if ((mOriginalText?.length ?: 0) <= (end + POSTFIX.length)) {
+             return
+         }*/
+
         val builder = SpannableStringBuilder(text)
         builder.replace(end - POSTFIX.length, end, POSTFIX)
         builder.setSpan(
-            ForegroundColorSpan(Color.BLACK),
+            ForegroundColorSpan(Color.BLUE),
             end - POSTFIX.length,
             end,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -154,7 +159,7 @@ class ExpandableTextView : AppCompatTextView, View.OnClickListener {
 
     private val paddingHeight: Int
         get() = compoundPaddingBottom + compoundPaddingTop
-    private val isCollapsed: Boolean
+     val isCollapsed: Boolean
         get() = Int.MAX_VALUE != maxLines
 
 
@@ -171,6 +176,6 @@ class ExpandableTextView : AppCompatTextView, View.OnClickListener {
     }
 
     companion object {
-        private const val POSTFIX = "...See More "
+        private const val POSTFIX = " ...See More"
     }
 }

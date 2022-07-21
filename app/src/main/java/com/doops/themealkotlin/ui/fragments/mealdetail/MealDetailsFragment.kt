@@ -6,7 +6,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -17,7 +16,6 @@ import com.doops.themealkotlin.adaters.MealsAdapter
 import com.doops.themealkotlin.data.models.MealFragmentRecyclerModel
 import com.doops.themealkotlin.data.remote.Resource
 import com.doops.themealkotlin.databinding.FragmentMealDetailBinding
-import com.doops.themealkotlin.databinding.FragmentMealsBinding
 import com.doops.themealkotlin.other.collectLatestLifeCycleFlow
 import com.doops.themealkotlin.other.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,12 +32,9 @@ class MealDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding =
-            FragmentMealDetailBinding.inflate(
-                LayoutInflater.from(requireContext()),
-                container,
-                false
-            )
+        _binding = FragmentMealDetailBinding.inflate(
+            LayoutInflater.from(requireContext()), container, false
+        )
         viewModel.meal = arguments.meal
         binding.toolbarLayout.title = viewModel.meal?.strMeal ?: "Meal Details"
         binding.toolbar.setNavigationOnClickListener {
@@ -106,7 +101,6 @@ class MealDetailsFragment : Fragment() {
                 }
                 else -> {
                     binding.refreshLayout.isRefreshing = false
-
                 }
             }
         }
